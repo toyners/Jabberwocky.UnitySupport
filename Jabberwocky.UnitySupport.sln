@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.UnitySupport", "Jabberwocky.UnitySupport\Jabberwocky.UnitySupport.csproj", "{F32D32F6-DAA1-4612-B661-BE707591B841}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.UnitySupport.UnitTests", "Jabberwocky.UnitySupport.UnitTests\Jabberwocky.UnitySupport.UnitTests.csproj", "{157B06D8-CC98-471D-BEEE-F3863CD34C45}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{30457A65-5636-4D74-AAA0-A37907BD0EFD}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F32D32F6-DAA1-4612-B661-BE707591B841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F32D32F6-DAA1-4612-B661-BE707591B841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F32D32F6-DAA1-4612-B661-BE707591B841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F32D32F6-DAA1-4612-B661-BE707591B841}.Release|Any CPU.Build.0 = Release|Any CPU
+		{157B06D8-CC98-471D-BEEE-F3863CD34C45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{157B06D8-CC98-471D-BEEE-F3863CD34C45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{157B06D8-CC98-471D-BEEE-F3863CD34C45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{157B06D8-CC98-471D-BEEE-F3863CD34C45}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
