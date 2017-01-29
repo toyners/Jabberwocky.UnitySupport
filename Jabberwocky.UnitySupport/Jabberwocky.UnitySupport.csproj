@@ -56,8 +56,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetPath)" "$(SolutionDir)Assets\Libraries\" /v /q /y
-xcopy "$(TargetDir)$(SolutionName).pdb" "$(SolutionDir)Assets\Libraries\" /v /q /y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetPath)" "C:\Projects\Unity Projects\Assets\Libraries\" /v /q /y
+xcopy "$(TargetDir)$(SolutionName).pdb" "C:\Projects\Unity Projects\Assets\Libraries\" /v /q /y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
