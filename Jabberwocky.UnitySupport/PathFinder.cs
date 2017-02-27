@@ -32,14 +32,14 @@ namespace Jabberwocky.UnitySupport
 
     private Func<Vector2, Vector2, Single> distanceFinder;
 
-    private Func<Vector2, Vector2, Boolean> raycaster;
+    private Func<Vector2, Vector2, Boolean> canTravelBetweenPoints;
     #endregion
 
     #region Construction
-    public PathFinder(PointGraph graph, Func<Vector2, Vector2, Single> distanceFinder, Func<Vector2, Vector2, Boolean> raycaster)
+    public PathFinder(PointGraph graph, Func<Vector2, Vector2, Single> distanceFinder, Func<Vector2, Vector2, Boolean> canTravelBetweenPoints)
     {
       this.distanceFinder = distanceFinder;
-      this.raycaster = raycaster;
+      this.canTravelBetweenPoints = canTravelBetweenPoints;
 
       this.distanceCoveringAllPermanentPoints = this.CalculateDistanceCoveringAllVerticies(graph.Distances);
 
@@ -52,14 +52,16 @@ namespace Jabberwocky.UnitySupport
     #region Methods
     public void CalculatePath(Vector2 start, Vector2 end, LinkedList<Vector2> points)
     {
-      if (this.raycaster(start, end))
+      if (this.canTravelBetweenPoints(start, end))
       {
-        this.AddTemporaryPoints(start, end);
-        this.CalculatePath(points);
+        // Nothing blocking the straight route to the end.
+        points.AddLast(end);
         return;
       }
 
-      points.AddLast(end);
+      // Path is blocked - build the path around the blockage.
+      this.AddTemporaryPoints(start, end);
+      this.CalculatePath(points);
     }
 
     private void AddTemporaryPoints(Vector2 start, Vector2 end)

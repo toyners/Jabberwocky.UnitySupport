@@ -30,7 +30,7 @@ namespace Jabberwocky.UnitySupport.UnitTests
       var pathFinder = new PathFinder(
         pointGraph, 
         (s, e) => { throw new Exception("Should not call this"); }, 
-        (s, e) => { return false; });
+        (s, e) => { return true; });
 
       // Act
       pathFinder.CalculatePath(start, end, points);
@@ -104,7 +104,7 @@ namespace Jabberwocky.UnitySupport.UnitTests
 
       var points = new LinkedList<Vector2>();
 
-      var pathFinder = new PathFinder(pointGraph, distanceFinder, (s, e) => { return true; });
+      var pathFinder = new PathFinder(pointGraph, distanceFinder, (s, e) => { return false; });
 
       // Act
       pathFinder.CalculatePath(start, end, points);
@@ -207,7 +207,7 @@ namespace Jabberwocky.UnitySupport.UnitTests
 
       var points = new LinkedList<Vector2>();
 
-      var pathFinder = new PathFinder(pointGraph, distanceFinder, (s, e) => { return true; });
+      var pathFinder = new PathFinder(pointGraph, distanceFinder, (s, e) => { return false; });
 
       // Act
       pathFinder.CalculatePath(start, end, points);
