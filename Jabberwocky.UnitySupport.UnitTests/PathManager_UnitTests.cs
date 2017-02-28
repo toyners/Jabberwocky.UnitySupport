@@ -2,7 +2,6 @@
 namespace Jabberwocky.UnitySupport
 {
   using System;
-  using System.Collections.Generic;
   using NUnit.Framework;
   using FluentAssertions;
   using UnityEngine;
