@@ -69,6 +69,11 @@ namespace Jabberwocky.UnitySupport
       return waypoint;
     }
 
+    public Vector2 PeekNextWaypoint()
+    {
+      throw new NotImplementedException();
+    }
+
     public void SetDestination(Vector2 position, Vector2 destination)
     {
       this.Clear();
