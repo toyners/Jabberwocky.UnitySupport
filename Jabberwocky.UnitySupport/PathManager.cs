@@ -48,6 +48,7 @@ namespace Jabberwocky.UnitySupport
 
     public void AtDestination()
     {
+      this.PopNextWaypoint();
       this.pathDisplay?.RemoveWaypointMarker();
     }
 
@@ -57,21 +58,22 @@ namespace Jabberwocky.UnitySupport
       this.pathDisplay?.ClearWaypointMarkers();
     }
 
-    public Vector2 GetNextWaypoint()
+    public Vector2 PeekNextWaypoint()
     {
       if (this.waypoints.Count == 0)
       {
         throw new Exception("No waypoints");
       }
 
-      var waypoint = this.waypoints.First.Value;
-      this.waypoints.RemoveFirst();
-      return waypoint;
+      return this.waypoints.First.Value;
     }
 
-    public Vector2 PeekNextWaypoint()
+    public void PopNextWaypoint()
     {
-      throw new NotImplementedException();
+      if (this.waypoints.Count > 0)
+      {
+        this.waypoints.RemoveFirst();
+      }
     }
 
     public void SetDestination(Vector2 position, Vector2 destination)

@@ -9,12 +9,21 @@ namespace Jabberwocky.UnitySupport
   [TestFixture]
   public class PathManager_UnitTests
   {
+
     [Test]
-    public void GetNextWaypoint_NoDestination_ThrowsMeaningfulException()
+    public void PeekNextWaypoint_NoDestination_ThrowsMeaningfulException()
     {
       var pathManager = new PathManager(null);
-      Action action = () => pathManager.GetNextWaypoint();
+      Action action = () => pathManager.PeekNextWaypoint();
       action.ShouldThrow<Exception>().WithMessage("No waypoints");
+    }
+
+    [Test]
+    public void PopNextWaypoint_NoDestination_NoExceptionThrown()
+    {
+      var pathManager = new PathManager(null);
+      Action action = () => pathManager.PopNextWaypoint();
+      action.ShouldNotThrow<Exception>();
     }
 
     [Test]
@@ -26,7 +35,7 @@ namespace Jabberwocky.UnitySupport
 
       pathManager.SetDestination(position, destination);
 
-      pathManager.GetNextWaypoint().Should().Be(destination);
+      PeekAndPopNextWaypoint(pathManager).Should().Be(destination);
       pathManager.Count.Should().Be(0);
     }
 
@@ -53,9 +62,9 @@ namespace Jabberwocky.UnitySupport
       
       pathManager.SetDestination(position, destination);
 
-      pathManager.GetNextWaypoint().Should().Be(waypoint1);
-      pathManager.GetNextWaypoint().Should().Be(waypoint2);
-      pathManager.GetNextWaypoint().Should().Be(destination);
+      PeekAndPopNextWaypoint(pathManager).Should().Be(waypoint1);
+      PeekAndPopNextWaypoint(pathManager).Should().Be(waypoint2);
+      PeekAndPopNextWaypoint(pathManager).Should().Be(destination);
       pathManager.Count.Should().Be(0);
     }
 
@@ -87,11 +96,12 @@ namespace Jabberwocky.UnitySupport
       });
 
       pathManager.SetDestination(position, destination);
-      pathManager.GetNextWaypoint().Should().Be(waypoint1);
-      pathManager.GetNextWaypoint().Should().Be(waypoint2);
-      pathManager.GetNextWaypoint().Should().Be(waypoint3);
-      pathManager.GetNextWaypoint().Should().Be(waypoint4);
-      pathManager.GetNextWaypoint().Should().Be(destination);
+
+      PeekAndPopNextWaypoint(pathManager).Should().Be(waypoint1);
+      PeekAndPopNextWaypoint(pathManager).Should().Be(waypoint2);
+      PeekAndPopNextWaypoint(pathManager).Should().Be(waypoint3);
+      PeekAndPopNextWaypoint(pathManager).Should().Be(waypoint4);
+      PeekAndPopNextWaypoint(pathManager).Should().Be(destination);
       pathManager.Count.Should().Be(0);
     }
 
@@ -128,14 +138,16 @@ namespace Jabberwocky.UnitySupport
       });
 
       pathManager.SetDestination(position, destination1);
-      pathManager.GetNextWaypoint().Should().Be(waypoint1);
+      PeekAndPopNextWaypoint(pathManager).Should().Be(waypoint1);
 
       pathManager.AddDestination(destination2);
-      pathManager.GetNextWaypoint().Should().Be(waypoint2);
-      pathManager.GetNextWaypoint().Should().Be(destination1);
-      pathManager.GetNextWaypoint().Should().Be(waypoint3);
-      pathManager.GetNextWaypoint().Should().Be(waypoint4);
-      pathManager.GetNextWaypoint().Should().Be(destination2);
+
+      PeekAndPopNextWaypoint(pathManager).Should().Be(waypoint2);
+      PeekAndPopNextWaypoint(pathManager).Should().Be(destination1);
+      PeekAndPopNextWaypoint(pathManager).Should().Be(waypoint3);
+      PeekAndPopNextWaypoint(pathManager).Should().Be(waypoint4);
+      PeekAndPopNextWaypoint(pathManager).Should().Be(destination2);
+
       pathManager.Count.Should().Be(0);
     }
 
@@ -158,11 +170,18 @@ namespace Jabberwocky.UnitySupport
       });
 
       pathManager.SetDestination(position, destination1);
-      pathManager.GetNextWaypoint().Should().Be(destination1);
+      PeekAndPopNextWaypoint(pathManager).Should().Be(destination1);
 
       Action action = () => { pathManager.AddDestination(destination2); };
 
       action.ShouldThrow<Exception>().WithMessage("Cannot add a destination with no waypoints present. Use SetDestination instead.");
+    }
+
+    private Vector2 PeekAndPopNextWaypoint(PathManager pathManager)
+    {
+      var waypoint = pathManager.PeekNextWaypoint();
+      pathManager.PopNextWaypoint();
+      return waypoint;
     }
   }
 }
