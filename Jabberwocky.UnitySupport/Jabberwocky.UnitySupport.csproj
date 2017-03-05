@@ -43,7 +43,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graph.cs" />
     <Compile Include="GraphBaker.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Path.cs" />

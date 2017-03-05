@@ -7,7 +7,7 @@ namespace Jabberwocky.UnitySupport
 
   public class PathManager
   {
-    #region Members
+    #region Fields
     private LinkedList<Vector2> waypoints;
 
     private Action<Vector2, Vector2, LinkedList<Vector2>> pathFinder;

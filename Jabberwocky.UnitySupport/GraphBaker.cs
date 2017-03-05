@@ -7,7 +7,7 @@ namespace Jabberwocky.UnitySupport
 
   public static class GraphBaker
   {
-    public static PointGraph Bake(List<Vector2> points, Func<Vector2, Vector2, Boolean> raycastFunc)
+    public static PointGraph Bake(List<Vector2> points, Func<Vector2, Vector2, Boolean> canTravelBetweenPoints)
     {
       if (points == null)
       {
@@ -19,9 +19,9 @@ namespace Jabberwocky.UnitySupport
         throw new Exception(String.Format("Must have a minimum of two points to bake graph. Count is {0}.", points.Count));
       }
 
-      if (raycastFunc == null)
+      if (canTravelBetweenPoints == null)
       {
-        throw new NullReferenceException("Parameter 'raycastFunc' is null.");
+        throw new NullReferenceException("Parameter 'canTravelBetweenPoints' is null.");
       }
 
       var verticies = new List<Vector2>(points);
@@ -35,7 +35,7 @@ namespace Jabberwocky.UnitySupport
           var vertex1 = verticies[i];
           var vertex2 = verticies[j];
           var distance = PointGraph.CannotBeReached;
-          if (raycastFunc(vertex1, vertex2))
+          if (canTravelBetweenPoints(vertex1, vertex2))
           {
             distance = Vector2.Distance(vertex1, vertex2);
           }

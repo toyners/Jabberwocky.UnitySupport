@@ -47,7 +47,7 @@ namespace Jabberwocky.UnitySupport.UnitTests
       Action action = () => { GraphBaker.Bake(new List<Vector2> { Vector2.zero, Vector2.one }, null); };
 
       // Act and Assert
-      action.ShouldThrow<NullReferenceException>().WithMessage("Parameter 'raycastFunc' is null.");
+      action.ShouldThrow<NullReferenceException>().WithMessage("Parameter 'canTravelBetweenPoints' is null.");
     }
 
     [Test]

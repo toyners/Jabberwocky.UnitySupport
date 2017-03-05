@@ -29,16 +29,12 @@ namespace Jabberwocky.UnitySupport
     // For each point, the total cost of getting from the start point to the goal
     // by passing by that point. That value is partly known, partly heuristic.
     private Dictionary<Int32, Single> totalCostOfStartToGoalViaThisPoint = new Dictionary<Int32, Single>();
-
-    private Func<Vector2, Vector2, Single> distanceFinder;
-
     private Func<Vector2, Vector2, Boolean> canTravelBetweenPoints;
     #endregion
 
     #region Construction
-    public PathFinder(PointGraph graph, Func<Vector2, Vector2, Single> distanceFinder, Func<Vector2, Vector2, Boolean> canTravelBetweenPoints)
+    public PathFinder(PointGraph graph, Func<Vector2, Vector2, Boolean> canTravelBetweenPoints)
     {
-      this.distanceFinder = distanceFinder;
       this.canTravelBetweenPoints = canTravelBetweenPoints;
 
       this.distanceCoveringAllPermanentPoints = this.CalculateDistanceCoveringAllVerticies(graph.Distances);
@@ -74,7 +70,12 @@ namespace Jabberwocky.UnitySupport
       {
         for (Int32 j = 0; j < length - 2; j++)
         {
-          var distance = this.distanceFinder(this.verticies[i], this.verticies[j]);
+          var distance = PointGraph.CannotBeReached;
+          if (this.canTravelBetweenPoints(this.verticies[i], this.verticies[j]))
+          {
+            distance = Vector2.Distance(this.verticies[i], this.verticies[j]);
+          }
+          
           this.distances[i, j] = distance;
           this.distances[j, i] = distance;
         }

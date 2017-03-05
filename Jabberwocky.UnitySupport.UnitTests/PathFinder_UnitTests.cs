@@ -28,8 +28,7 @@ namespace Jabberwocky.UnitySupport.UnitTests
       var points = new LinkedList<Vector2>();
 
       var pathFinder = new PathFinder(
-        pointGraph, 
-        (s, e) => { throw new Exception("Should not call this"); }, 
+        pointGraph,  
         (s, e) => { return true; });
 
       // Act
@@ -45,8 +44,6 @@ namespace Jabberwocky.UnitySupport.UnitTests
     public void CalculatePath_MovingAlongBaseOfThreePointIsoscelesTriangle_PathAlongBaseAddedToWaypoints()
     {
       // Arrange
-      var start = new Vector2(-1, 0);
-      var end = new Vector2(2, 0);
       var vertexA = Vector2.zero;
       var vertexB = new Vector2(1, 0);
       var vertexC = new Vector2(0.5f, 4);
@@ -66,45 +63,31 @@ namespace Jabberwocky.UnitySupport.UnitTests
       };
 
       var pointGraph = new PointGraph(verticies, distances);
+      var start = new Vector2(-1, 0);
+      var end = new Vector2(2, 0);
 
-      Func<Vector2, Vector2, Single> distanceFinder = (s, e) =>
+      Func<Vector2, Vector2, Boolean> canTravelBetweenPoints = (s, e) =>
       {
-        if (s == start && e == vertexA)
-        {
-          return 1;
-        }
-
         if (s == start && e == vertexB)
         {
-          return Unreachable;
-        }
-
-        if (s == start && e == vertexC)
-        {
-          return 10;
+          return false;
         }
 
         if (s == end && e == vertexA)
         {
-          return Unreachable;
+          return false;
         }
 
-        if (s == end && e == vertexB)
+        if ((s == start && e == end) || (s == end && e == start))
         {
-          return 1;
+          return false;
         }
 
-        if (s == end && e == vertexC)
-        {
-          return 10;
-        }
-
-        throw new Exception("Parameters not recognised.");
+        return true;
       };
 
       var points = new LinkedList<Vector2>();
-
-      var pathFinder = new PathFinder(pointGraph, distanceFinder, (s, e) => { return false; });
+      var pathFinder = new PathFinder(pointGraph, canTravelBetweenPoints);
 
       // Act
       pathFinder.CalculatePath(start, end, points);
@@ -148,66 +131,40 @@ namespace Jabberwocky.UnitySupport.UnitTests
       };
 
       var pointGraph = new PointGraph(verticies, distances);
-
       var start = new Vector2(-1, 0);
       var end = new Vector2(3, 0);
-      var distanceFromStartToA = 1;
-      var distanceFromStartToB = Unreachable;
-      var distanceFromStartToC = Unreachable;
-      var distanceFromStartToD = 10;
-      var distanceFromEndToA = Unreachable;
-      var distanceFromEndToB = Unreachable;
-      var distanceFromEndToC = 1;
-      var distanceFromEndToD = 10;
-
-      Func<Vector2, Vector2, Single> distanceFinder = (s, e) =>
+      Func<Vector2, Vector2, Boolean> canTravelBetweenPoints = (s, e) =>
       {
-        if (s == start && e == vertexA)
-        {
-          return distanceFromStartToA;
-        }
-
         if (s == start && e == vertexB)
         {
-          return distanceFromStartToB;
+          return false;
         }
 
         if (s == start && e == vertexC)
         {
-          return distanceFromStartToC;
-        }
-
-        if (s == start && e == vertexD)
-        {
-          return distanceFromStartToD;
+          return false;
         }
 
         if (s == end && e == vertexA)
         {
-          return distanceFromEndToA;
+          return false;
         }
 
         if (s == end && e == vertexB)
         {
-          return distanceFromEndToB;
+          return false;
         }
 
-        if (s == end && e == vertexC)
+        if ((s == start && e == end) || (s == end && e == start))
         {
-          return distanceFromEndToC;
+          return false;
         }
 
-        if (s == end && e == vertexD)
-        {
-          return distanceFromEndToD;
-        }
-
-        throw new Exception("Parameters not recognised.");
+        return true;
       };
 
       var points = new LinkedList<Vector2>();
-
-      var pathFinder = new PathFinder(pointGraph, distanceFinder, (s, e) => { return false; });
+      var pathFinder = new PathFinder(pointGraph, canTravelBetweenPoints);
 
       // Act
       pathFinder.CalculatePath(start, end, points);
